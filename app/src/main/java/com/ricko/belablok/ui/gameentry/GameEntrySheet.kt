@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ricko.belablok.databinding.BottomSheetGameEntryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GameEntrySheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetGameEntryBinding
@@ -27,5 +28,6 @@ class GameEntrySheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.player1Score.isSelected = true
+        viewModel.lastMatch.observe(viewLifecycleOwner){}
     }
 }

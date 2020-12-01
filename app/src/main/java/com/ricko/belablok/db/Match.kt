@@ -5,12 +5,9 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
-data class Game(
-    val player1Score: Int,
-    val player2Score: Int,
-    val player1Callings: Int,
-    val player2Callings: Int,
-    val matchId: String,
+data class Match(
+    var player1Name: String,
+    var player2Name: String,
     val creationTime: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = false)
     val id: String = UUID.randomUUID().toString()

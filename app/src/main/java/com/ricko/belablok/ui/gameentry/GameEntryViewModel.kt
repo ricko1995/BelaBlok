@@ -2,13 +2,21 @@ package com.ricko.belablok.ui.gameentry
 
 import android.view.View
 import android.widget.Toast
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.textview.MaterialTextView
 import com.ricko.belablok.R
+import com.ricko.belablok.db.Game
+import com.ricko.belablok.db.Match
+import com.ricko.belablok.repository.MainRepository
+import kotlinx.coroutines.launch
+import java.util.*
 
-class GameEntryViewModel : ViewModel() {
+class GameEntryViewModel @ViewModelInject constructor(
+    private val repository: MainRepository
+) : ViewModel() {
 
     private var selectedPlayer1: Boolean = true
     private var selectedPlayer2: Boolean = false
@@ -18,6 +26,16 @@ class GameEntryViewModel : ViewModel() {
 
     val player1Callings = MutableLiveData("")
     val player2Callings = MutableLiveData("")
+    val lastMatch = repository.getLatestMatchWithGames()
+
+//    private lateinit var _latestMatchWithGames:LiveData<MatchWithGames>
+
+
+    init {
+        viewModelScope.launch {
+//            _latestMatchWithGames = repository.getLatestMatchWithGames()
+        }
+    }
 
     fun View.onScoreClick(v: View) {
         v.isSelected = false
@@ -114,34 +132,63 @@ class GameEntryViewModel : ViewModel() {
         }
         if (player1Score.value == "0") player1Callings.value = ""
         if (player2Score.value == "0") player2Callings.value = ""
-        var player1TotalScore = player1Score.value!!.toInt()
-        var player2TotalScore = player2Score.value!!.toInt()
+        var player1TotalCallings = 0
+        var player2TotalCallings = 0
         player1Callings.value?.let {
             if (it.isNotEmpty()) {
                 val list = it.split("+").map { i -> i.toInt() }
-                list.forEach { i -> player1TotalScore += i }
+                list.forEach { i -> player1TotalCallings += i }
             }
         }
         player2Callings.value?.let {
             if (it.isNotEmpty()) {
                 val list = it.split("+").map { i -> i.toInt() }
-                list.forEach { i -> player2TotalScore += i }
+                list.forEach { i -> player2TotalCallings += i }
             }
         }
         if (toggleGroup.checkedButtonId == R.id.player1FullWin) {
-            player1TotalScore += 90
-            player2TotalScore = 0
+            player1TotalCallings += 90
+            player2TotalCallings = 0
         }
         if (toggleGroup.checkedButtonId == R.id.player2FullWin) {
-            player2TotalScore += 90
-            player1TotalScore = 0
+            player2TotalCallings += 90
+            player1TotalCallings = 0
         }
 
-        onCancelClick()
 
-        println("----------------------------")
-        println(player1TotalScore)
-        println(player2TotalScore)
-        println("----------------------------")
+
+        viewModelScope.launch {
+            if (lastMatch.value == null) createNewMatchAndGame(player1TotalCallings, player2TotalCallings)
+            else {
+                val p1Sum = lastMatch.value!!.games.map { it.player1Score }.sum() + lastMatch.value!!.games.map { it.player1Callings }.sum()
+                val p2Sum = lastMatch.value!!.games.map { it.player2Score }.sum() + lastMatch.value!!.games.map { it.player2Callings }.sum()
+                if (p1Sum > 1001 || p2Sum > 1001) {
+                    createNewMatchAndGame(player1TotalCallings, player2TotalCallings)
+                } else {
+                    insertGameInDb(lastMatch.value!!.match.id, player1TotalCallings, player2TotalCallings)
+                }
+
+            }
+            onCancelClick()
+        }
+    }
+
+    private suspend fun insertGameInDb(matchId: String, player1TotalCallings: Int, player2TotalCallings: Int) {
+        val p1s = player1Score.value!!.toInt()
+        val p2s = player2Score.value!!.toInt()
+        val game = Game(p1s, p2s, player1TotalCallings, player2TotalCallings, matchId)
+        repository.insertGame(game)
+    }
+
+    private suspend fun createNewMatchAndGame(player1TotalCallings: Int, player2TotalCallings: Int) {
+        val matchId = UUID.randomUUID().toString()
+        val p1s = player1Score.value!!.toInt()
+        val p2s = player2Score.value!!.toInt()
+
+        val match = Match("MI", "VI", id = matchId)
+        val game = Game(p1s, p2s, player1TotalCallings, player2TotalCallings, matchId)
+
+        repository.insertMatch(match)
+        repository.insertGame(game)
     }
 }
