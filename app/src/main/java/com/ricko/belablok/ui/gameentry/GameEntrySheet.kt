@@ -4,17 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ricko.belablok.databinding.BottomSheetGameEntryBinding
+import com.ricko.belablok.ui.currentgame.CurrentGameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GameEntrySheet : BottomSheetDialogFragment() {
+class GameEntrySheet(val onCloseCallback: () -> Unit) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetGameEntryBinding
 
     private val viewModel: GameEntryViewModel by viewModels()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onCloseCallback()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = BottomSheetGameEntryBinding.inflate(inflater, container, false)
@@ -27,7 +34,6 @@ class GameEntrySheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.player1Score.isSelected = true
-        viewModel.lastMatch.observe(viewLifecycleOwner){}
+        viewModel.lastMatch.observe(viewLifecycleOwner) {}
     }
 }

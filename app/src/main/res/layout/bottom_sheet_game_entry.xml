@@ -4,392 +4,399 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModelVar"
             type="com.ricko.belablok.ui.gameentry.GameEntryViewModel" />
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="12dp">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleBtnGroup"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="true">
+            android:paddingBottom="12dp">
 
-            <Button
-                android:id="@+id/player1FullWin"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleBtnGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                app:clearSelection="@{viewModelVar.player1Score != `162` &amp;&amp; viewModelVar.player1Score != `0`}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/player1FullWin"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
+                    android:text="Štiglja" />
+
+                <Button
+
+                    android:id="@+id/player2FullWin"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
+                    android:text="Štiglja" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <TextView
+                android:id="@+id/player1Score"
+                style="@style/TextAppearance.MaterialComponents.Headline3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v)}"
-                android:text="Štiglja" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/score_input_selector"
+                android:gravity="center"
+                android:onClick="@{(v)->viewModelVar.onScoreClick(v)}"
+                android:selectAllOnFocus="true"
+                android:text="@{viewModelVar.player1Score}"
+                app:layout_constraintEnd_toStartOf="@+id/player2Score"
+                app:layout_constraintStart_toStartOf="parent"
+                app:isViewSelected="@{viewModelVar.selectedPlayer1}"
+                app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/player2Score"
+                style="@style/TextAppearance.MaterialComponents.Headline3"
+                android:layout_width="0dp"
+                app:isViewSelected="@{viewModelVar.selectedPlayer2}"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/score_input_selector"
+                android:gravity="center"
+                android:onClick="@{(v)->viewModelVar.onScoreClick(v)}"
+                android:text="@{viewModelVar.player2Score}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/player1Score"
+                app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"
+                tools:text="0" />
+
 
             <Button
+                android:id="@+id/button12"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:drawableLeft="@drawable/ic_cancel_white"
+                android:onClick="@{()->viewModelVar.onCancelClick()}"
+                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/button9"
+                app:layout_constraintStart_toStartOf="@+id/button9"
+                app:layout_constraintTop_toBottomOf="@+id/button9" />
 
-                android:id="@+id/player2FullWin"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(0)}"
+                android:text="0"
+                app:layout_constraintStart_toEndOf="@+id/button12"
+                app:layout_constraintTop_toBottomOf="@+id/button10" />
+
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:drawableLeft="@drawable/ic_backspace_white"
+                android:onClick="@{()->viewModelVar.onBackspaceClick()}"
+                android:padding="12dp"
+                app:layout_constraintStart_toEndOf="@+id/button13"
+                app:layout_constraintTop_toBottomOf="@+id/button11" />
+
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(1)}"
+                android:text="1"
+                app:layout_constraintStart_toStartOf="@+id/player1Score"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(2)}"
+                android:text="2"
+                app:layout_constraintBottom_toBottomOf="@+id/button"
+                app:layout_constraintStart_toEndOf="@+id/button"
+                app:layout_constraintTop_toTopOf="@+id/button" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(3)}"
+                android:text="3"
+                app:layout_constraintBottom_toBottomOf="@+id/button4"
+                app:layout_constraintStart_toEndOf="@+id/button4"
+                app:layout_constraintTop_toTopOf="@+id/button4" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(4)}"
+                android:text="4"
+                app:layout_constraintEnd_toEndOf="@+id/button"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(5)}"
+                android:text="5"
+                app:layout_constraintStart_toEndOf="@+id/button6"
+                app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(6)}"
+                android:text="6"
+                app:layout_constraintStart_toEndOf="@+id/button7"
+                app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(7)}"
+                android:text="7"
+                app:layout_constraintEnd_toEndOf="@+id/button6"
+                app:layout_constraintStart_toStartOf="@+id/button6"
+                app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(8)}"
+                android:text="8"
+                app:layout_constraintStart_toEndOf="@+id/button9"
+                app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="48dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="4dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(9)}"
+                android:text="9"
+                app:layout_constraintStart_toEndOf="@+id/button10"
+                app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+            <TextView
+                android:id="@+id/textView9"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v)}"
-                android:text="Štiglja" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{viewModelVar.player1Callings}"
+                app:layout_constraintEnd_toStartOf="@+id/view4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/player1Score"
+                tools:text="TextView" />
 
-        <TextView
-            android:id="@+id/player1Score"
-            style="@style/TextAppearance.MaterialComponents.Headline3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:background="@drawable/score_input_selector"
-            android:gravity="center"
-            android:layout_marginTop="4dp"
-            android:onClick="@{(v)->viewModelVar.onScoreClick(v, player2Score)}"
-            android:selectAllOnFocus="true"
-            android:text="@{viewModelVar.player1Score}"
-            app:layout_constraintEnd_toStartOf="@+id/player2Score"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"
-            tools:text="0" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{viewModelVar.player2Callings}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view4"
+                app:layout_constraintTop_toBottomOf="@+id/player2Score"
+                tools:text="TextView" />
 
-        <TextView
-            android:layout_marginTop="4dp"
-            android:id="@+id/player2Score"
-            style="@style/TextAppearance.MaterialComponents.Headline3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:background="@drawable/score_input_selector"
-            android:gravity="center"
-            android:onClick="@{(v)->viewModelVar.onScoreClick(v, player1Score)}"
-            android:text="@{viewModelVar.player2Score}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/player1Score"
-            app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"
-            tools:text="0" />
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/button5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
+            <View
+                android:id="@+id/view4"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup" />
 
-        <Button
-            android:id="@+id/button12"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:drawableLeft="@drawable/ic_cancel_white"
-            android:onClick="@{()->viewModelVar.onCancelClick()}"
-            android:padding="12dp"
-            app:layout_constraintEnd_toEndOf="@+id/button9"
-            app:layout_constraintStart_toStartOf="@+id/button9"
-            app:layout_constraintTop_toBottomOf="@+id/button9" />
+            <Button
+                android:id="@+id/button15"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(-20)}"
+                android:text="-20"
+                app:layout_constraintStart_toStartOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-        <Button
-            android:id="@+id/button13"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(0)}"
-            android:text="0"
-            app:layout_constraintStart_toEndOf="@+id/button12"
-            app:layout_constraintTop_toBottomOf="@+id/button10" />
+            <Button
+                android:id="@+id/button16"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(20)}"
+                android:text="+20"
+                app:layout_constraintBottom_toBottomOf="@+id/button15"
+                app:layout_constraintEnd_toEndOf="@+id/button25"
+                app:layout_constraintTop_toTopOf="@+id/button15" />
 
-        <Button
-            android:id="@+id/button14"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:drawableLeft="@drawable/ic_backspace_white"
-            android:onClick="@{()->viewModelVar.onBackspaceClick()}"
-            android:padding="12dp"
-            app:layout_constraintStart_toEndOf="@+id/button13"
-            app:layout_constraintTop_toBottomOf="@+id/button11" />
+            <Button
+                android:id="@+id/button17"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(-50)}"
+                android:text="-50"
+                app:layout_constraintStart_toStartOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button15" />
 
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(50)}"
+                android:text="+50"
+                app:layout_constraintEnd_toEndOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button16" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(1)}"
-            android:text="1"
-            app:layout_constraintStart_toStartOf="@+id/player1Score"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            <Button
+                android:id="@+id/button19"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(-100)}"
+                android:text="-100"
+                app:layout_constraintStart_toStartOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button17" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(2)}"
-            android:text="2"
-            app:layout_constraintBottom_toBottomOf="@+id/button"
-            app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/button" />
+            <Button
+                android:id="@+id/button20"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(100)}"
+                android:text="+100"
+                app:layout_constraintEnd_toEndOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button18" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(3)}"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="@+id/button4"
-            app:layout_constraintStart_toEndOf="@+id/button4"
-            app:layout_constraintTop_toTopOf="@+id/button4" />
+            <Button
+                android:id="@+id/button21"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(-150)}"
+                android:text="-150"
+                app:layout_constraintStart_toStartOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button19" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(4)}"
-            android:text="4"
-            app:layout_constraintEnd_toEndOf="@+id/button"
-            app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            <Button
+                android:id="@+id/button22"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(150)}"
+                android:text="+150"
+                app:layout_constraintEnd_toEndOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button20" />
 
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(5)}"
-            android:text="5"
-            app:layout_constraintStart_toEndOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button4" />
+            <Button
+                android:id="@+id/button23"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(-200)}"
+                android:text="-200"
+                app:layout_constraintStart_toStartOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button21" />
 
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(6)}"
-            android:text="6"
-            app:layout_constraintStart_toEndOf="@+id/button7"
-            app:layout_constraintTop_toBottomOf="@+id/button5" />
+            <Button
+                android:id="@+id/button24"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{()->viewModelVar.onScoreBtnClick(200)}"
+                android:text="+200"
+                app:layout_constraintEnd_toEndOf="@+id/button25"
+                app:layout_constraintTop_toBottomOf="@+id/button22" />
 
-        <Button
-            android:id="@+id/button9"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(7)}"
-            android:text="7"
-            app:layout_constraintEnd_toEndOf="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            <Button
+                android:id="@+id/button25"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="uniform"
+                android:onClick="@{(v)->viewModelVar.onConfirmEntryClick(v, toggleBtnGroup)}"
+                android:text="Upiši"
+                app:layout_constraintBottom_toBottomOf="@+id/button14"
+                app:layout_constraintEnd_toEndOf="@+id/player2Score"
+                app:layout_constraintStart_toStartOf="@+id/player2Score"
+                app:layout_constraintTop_toBottomOf="@+id/button23" />
 
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(8)}"
-            android:text="8"
-            app:layout_constraintStart_toEndOf="@+id/button9"
-            app:layout_constraintTop_toBottomOf="@+id/button7" />
-
-        <Button
-            android:id="@+id/button11"
-            android:layout_width="48dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="4dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(9)}"
-            android:text="9"
-            app:layout_constraintStart_toEndOf="@+id/button10"
-            app:layout_constraintTop_toBottomOf="@+id/button8" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@{viewModelVar.player1Callings}"
-            app:layout_constraintEnd_toStartOf="@+id/view4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/player1Score"
-            tools:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@{viewModelVar.player2Callings}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view4"
-            app:layout_constraintTop_toBottomOf="@+id/player2Score"
-            tools:text="TextView" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/button5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <View
-            android:id="@+id/view4"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/view3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup" />
-
-        <Button
-            android:id="@+id/button15"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(-20)}"
-            android:text="-20"
-            app:layout_constraintStart_toStartOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-        <Button
-            android:id="@+id/button16"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(20)}"
-            android:text="+20"
-            app:layout_constraintBottom_toBottomOf="@+id/button15"
-            app:layout_constraintEnd_toEndOf="@+id/button25"
-            app:layout_constraintTop_toTopOf="@+id/button15" />
-
-        <Button
-            android:id="@+id/button17"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(-50)}"
-            android:text="-50"
-            app:layout_constraintStart_toStartOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button15" />
-
-        <Button
-            android:id="@+id/button18"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(50)}"
-            android:text="+50"
-            app:layout_constraintEnd_toEndOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button16" />
-
-        <Button
-            android:id="@+id/button19"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(-100)}"
-            android:text="-100"
-            app:layout_constraintStart_toStartOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button17" />
-
-        <Button
-            android:id="@+id/button20"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(100)}"
-            android:text="+100"
-            app:layout_constraintEnd_toEndOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button18" />
-
-        <Button
-            android:id="@+id/button21"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(-150)}"
-            android:text="-150"
-            app:layout_constraintStart_toStartOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button19" />
-
-        <Button
-            android:id="@+id/button22"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(150)}"
-            android:text="+150"
-            app:layout_constraintEnd_toEndOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button20" />
-
-        <Button
-            android:id="@+id/button23"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(-200)}"
-            android:text="-200"
-            app:layout_constraintStart_toStartOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button21" />
-
-        <Button
-            android:id="@+id/button24"
-            android:layout_width="64dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:autoSizeTextType="uniform"
-            android:onClick="@{()->viewModelVar.onScoreBtnClick(200)}"
-            android:text="+200"
-            app:layout_constraintEnd_toEndOf="@+id/button25"
-            app:layout_constraintTop_toBottomOf="@+id/button22" />
-
-        <Button
-            android:onClick="@{(v)->viewModelVar.onConfirmEntryClick(v, toggleBtnGroup)}"
-            android:id="@+id/button25"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:autoSizeTextType="uniform"
-            android:text="Upiši"
-            app:layout_constraintBottom_toBottomOf="@+id/button14"
-            app:layout_constraintEnd_toEndOf="@+id/player2Score"
-            app:layout_constraintStart_toStartOf="@+id/player2Score"
-            app:layout_constraintTop_toBottomOf="@+id/button23" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

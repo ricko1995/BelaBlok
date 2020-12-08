@@ -17,4 +17,11 @@
     <style name="Widget.MaterialComponents.Button.OutlinedButton.NoRadius" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">0dp</item>
     </style>
+
+    <style name="Widget.MaterialComponents.CardView.TopRadius" parent="CardView">
+        <item name="android:bottomLeftRadius">0dp</item>
+        <item name="android:bottomRightRadius">0dp</item>
+        <item name="android:topRightRadius">16dp</item>
+        <item name="android:topLeftRadius">16dp</item>
+    </style>
 </resources>

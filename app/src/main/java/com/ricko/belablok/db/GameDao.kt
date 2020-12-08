@@ -37,4 +37,7 @@ interface GameDao {
     @Query("DELETE FROM `Match`")
     suspend fun deleteAllMatches()
 
+    @Query("DELETE FROM game WHERE id = :gameId")
+    suspend fun deleteGame(gameId: String)
+
 }

@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/currentGameFragment"
         android:name="com.ricko.belablok.ui.currentgame.CurrentGameFragment"
-        android:label="fragment_current_game"
+        android:label="Bela blok (2 VS 2)"
         tools:layout="@layout/fragment_current_game" >
     </fragment>
 </navigation>

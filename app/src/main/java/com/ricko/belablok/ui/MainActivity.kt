@@ -24,4 +24,8 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.navHostFragment).navigateUp() || super.onSupportNavigateUp()
     }
+
+    override fun onBackPressed() {
+        finishAfterTransition()
+    }
 }
