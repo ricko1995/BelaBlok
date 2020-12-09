@@ -47,11 +47,21 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/v2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:elevation="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll1" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv1"
             android:layout_width="match_parent"
             android:layout_height="112dp"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="0dp"
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,8 +147,8 @@
                     android:layout_marginVertical="4dp"
                     android:background="@drawable/score_input_selector"
                     android:gravity="center"
-                    app:isViewSelected="@{viewModelVar.player2Sum>1000 &amp;&amp; viewModelVar.player2Sum>viewModelVar.player1Sum}"
                     android:text="@{String.valueOf(viewModelVar.player2Sum)}"
+                    app:isViewSelected="@{viewModelVar.player2Sum>1000 &amp;&amp; viewModelVar.player2Sum>viewModelVar.player1Sum}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textView2"
                     app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -154,6 +164,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -168,10 +194,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cv1" />
 
+        <ImageView
+            android:id="@+id/ivBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha=".1"
+            android:scaleType="fitXY"
+            android:src="@drawable/playing_card_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v1"
+            app:layout_constraintVertical_bias="0" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCurrentGame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

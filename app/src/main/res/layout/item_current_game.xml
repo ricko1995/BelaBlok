@@ -15,7 +15,8 @@
         android:id="@+id/cv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="2dp"
+        android:elevation="0dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,16 +26,18 @@
 
 
             <TextView
-                android:id="@+id/textView555"
+                android:id="@+id/textView5"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="@{String.valueOf(currentGameRecyclerVar.player1Score + currentGameRecyclerVar.player1Callings)}"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/textView11"
                 tools:text="TextView" />
 
             <TextView
@@ -42,12 +45,43 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintVertical_bias="0"
                 android:layout_margin="8dp"
                 android:text="@{String.valueOf(currentGameRecyclerVar.player2Score + currentGameRecyclerVar.player2Callings)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{currentGameRecyclerVar.player1ScorePlusCallings}"
+                android:textSize="12sp"
+                android:visibility="@{currentGameRecyclerVar.player1TextViewVisibility}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                tools:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{currentGameRecyclerVar.player2ScorePlusCallings}"
+                android:textSize="12sp"
+                android:visibility="@{currentGameRecyclerVar.player2TextViewVisibility}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/view2"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
                 tools:text="TextView" />
 
             <View

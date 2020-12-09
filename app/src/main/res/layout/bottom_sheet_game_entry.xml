@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModelVar"
             type="com.ricko.belablok.ui.gameentry.GameEntryViewModel" />
@@ -39,10 +40,10 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
-                    android:text="Štiglja" />
+                    android:text="Štiglja"
+                    app:strokeColor="@color/black" />
 
                 <Button
-
                     android:id="@+id/player2FullWin"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
                     android:layout_width="0dp"
@@ -51,7 +52,8 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
-                    android:text="Štiglja" />
+                    android:text="Štiglja"
+                    app:strokeColor="@color/black" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <TextView
@@ -66,9 +68,9 @@
                 android:onClick="@{(v)->viewModelVar.onScoreClick(v)}"
                 android:selectAllOnFocus="true"
                 android:text="@{viewModelVar.player1Score}"
+                app:isViewSelected="@{viewModelVar.selectedPlayer1}"
                 app:layout_constraintEnd_toStartOf="@+id/player2Score"
                 app:layout_constraintStart_toStartOf="parent"
-                app:isViewSelected="@{viewModelVar.selectedPlayer1}"
                 app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"
                 tools:text="0" />
 
@@ -76,7 +78,6 @@
                 android:id="@+id/player2Score"
                 style="@style/TextAppearance.MaterialComponents.Headline3"
                 android:layout_width="0dp"
-                app:isViewSelected="@{viewModelVar.selectedPlayer2}"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
@@ -84,6 +85,7 @@
                 android:gravity="center"
                 android:onClick="@{(v)->viewModelVar.onScoreClick(v)}"
                 android:text="@{viewModelVar.player2Score}"
+                app:isViewSelected="@{viewModelVar.selectedPlayer2}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/player1Score"
                 app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup"

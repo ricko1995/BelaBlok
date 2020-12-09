@@ -81,7 +81,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
 
     fun View.onNewGameClick() {
         viewModelScope.launch {
-            if (lastMatch.value == null) {
+            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000) {
                 createNewMatch()
                 return@launch
             }
@@ -91,7 +91,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
                     .setNegativeButton("Izbriši") { _, _ ->
                         for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) { repository.deleteGame(game.id) }
                     }
-                    .setNeutralButton("Spremi igru") { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
+                    .setNeutralButton("Spremi partiju") { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
                     .setPositiveButton("Odustani") { _, _ -> }
                     .create()
                     .show()
@@ -104,5 +104,12 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
             repository.deleteAll()
         }
         return true
+    }
+    suspend fun insertGame(game: Game){
+        repository.insertGame(game)
+    }
+
+    suspend fun deleteGame(game: Game){
+        repository.deleteGame(game.id)
     }
 }
