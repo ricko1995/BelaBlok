@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="matchesVar"
+            type="com.ricko.belablok.db.MatchWithGames" />
+    </data>
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cv3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="4dp"-->
+<!--        android:backgroundTint="@android:color/transparent"-->
+<!--        app:cardCornerRadius="0dp"-->
+<!--        app:cardElevation="0dp">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:backgroundTint="@android:color/transparent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/black">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:text="@{matchesVar.match.player1Name}"
+                        app:layout_constraintEnd_toStartOf="@+id/textView12"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="MI" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1px"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="@id/textView14"
+                        app:layout_constraintStart_toStartOf="@id/textView14"
+                        app:layout_constraintTop_toBottomOf="@id/textView14" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="@{matchesVar.datePlayed}"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@id/textView12"
+                        app:layout_constraintEnd_toEndOf="@id/textView12"
+                        app:layout_constraintStart_toStartOf="@id/textView12"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="13.2.2020\n21:51" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="VS"
+                        android:textSize="40sp"
+                        app:layout_constraintBottom_toBottomOf="@id/textView15"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvDate"
+                        app:layout_constraintVertical_bias="1"
+                        tools:layout_editor_absoluteY="0dp" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:text="@{matchesVar.match.player2Name}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView12"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="0dp"
+                        tools:text="VI" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1px"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="@id/textView13"
+                        app:layout_constraintStart_toStartOf="@id/textView13"
+                        app:layout_constraintTop_toBottomOf="@id/textView13" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        style="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{matchesVar.player1Score}"
+                        app:layout_constraintEnd_toEndOf="@id/textView14"
+                        app:layout_constraintStart_toStartOf="@id/textView14"
+                        app:layout_constraintTop_toBottomOf="@id/textView14"
+                        tools:text="1052" />
+
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{matchesVar.player2Score}"
+                        app:layout_constraintEnd_toEndOf="@id/textView13"
+                        app:layout_constraintStart_toStartOf="@id/textView13"
+                        app:layout_constraintTop_toBottomOf="@id/textView13"
+                        tools:text="854" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGamesFromMatch"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView15"
+                tools:listitem="@layout/item_current_game" />
+        </LinearLayout>
+<!--    </androidx.cardview.widget.CardView>-->
+</layout>

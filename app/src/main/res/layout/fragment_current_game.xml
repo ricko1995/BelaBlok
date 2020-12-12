@@ -43,7 +43,8 @@
                 android:layout_weight="1"
                 android:autoSizeMaxTextSize="16sp"
                 android:autoSizeTextType="uniform"
-                android:text="Detalji" />
+                android:onClick="@{(v)->viewModelVar.onHistoryClick(v)}"
+                android:text="Povijest" />
 
         </LinearLayout>
 
@@ -212,7 +213,6 @@
             android:id="@+id/rvCurrentGame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

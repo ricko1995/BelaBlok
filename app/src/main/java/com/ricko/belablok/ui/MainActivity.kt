@@ -1,7 +1,11 @@
 package com.ricko.belablok.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestinationBuilder
+import androidx.navigation.Navigator
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -23,9 +27,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.navHostFragment).navigateUp() || super.onSupportNavigateUp()
-    }
-
-    override fun onBackPressed() {
-        finishAfterTransition()
     }
 }

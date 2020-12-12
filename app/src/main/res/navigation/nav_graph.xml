@@ -7,13 +7,16 @@
 
     <fragment
         android:id="@+id/allGamesFragment"
-        android:name="com.ricko.belablok.ui.allgames.AllGamesFragment"
-        android:label="fragment_current_game"
-        tools:layout="@layout/fragment_current_game" />
+        android:name="com.ricko.belablok.ui.allgames.AllMatchesFragment"
+        android:label="Povijest"
+        tools:layout="@layout/fragment_all_matches" />
     <fragment
         android:id="@+id/currentGameFragment"
         android:name="com.ricko.belablok.ui.currentgame.CurrentGameFragment"
         android:label="Bela blok (2 VS 2)"
         tools:layout="@layout/fragment_current_game" >
+        <action
+            android:id="@+id/action_currentGameFragment_to_allGamesFragment"
+            app:destination="@id/allGamesFragment" />
     </fragment>
 </navigation>

@@ -12,7 +12,7 @@ import com.ricko.belablok.R
 import com.ricko.belablok.databinding.ItemCurrentGameBinding
 import com.ricko.belablok.db.Game
 
-class CurrentGameRvAdapter(private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<CurrentGameRvAdapter.GameViewHolder>() {
+class CurrentGameRvAdapter(private val onItemClickListener: OnItemClickListener?) : RecyclerView.Adapter<CurrentGameRvAdapter.GameViewHolder>() {
     inner class GameViewHolder(val binding: ItemCurrentGameBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object : DiffUtil.ItemCallback<Game>() {
@@ -32,7 +32,7 @@ class CurrentGameRvAdapter(private val onItemClickListener: OnItemClickListener)
         val item = differ.currentList[position]
         holder.binding.currentGameRecyclerVar = item
         holder.binding.root.setOnClickListener {
-            onItemClickListener.onItemClick(item, position, holder.itemView)
+            onItemClickListener?.onItemClick(item, position, holder.itemView)
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
@@ -89,27 +90,39 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
                 AlertDialog.Builder(context)
                     .setTitle("Izbriši partiju u tijeku?")
                     .setNegativeButton("Izbriši") { _, _ ->
-                        for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) { repository.deleteGame(game.id) }
+                        for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) {
+                            repository.deleteGame(game.id)
+                            repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
+                        }
                     }
                     .setNeutralButton("Spremi partiju") { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
                     .setPositiveButton("Odustani") { _, _ -> }
                     .create()
                     .show()
+            } else {
+                viewModelScope.launch(Dispatchers.IO) {
+                    repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
+                }
             }
         }
     }
 
     fun onLongNewGameClick(): Boolean {
-        viewModelScope.launch(Dispatchers.IO) { //TODO REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!
-            repository.deleteAll()
+        viewModelScope.launch(Dispatchers.IO) {
+//            repository.deleteAll()//TODO REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!
         }
         return true
     }
-    suspend fun insertGame(game: Game){
+
+    fun View.onHistoryClick() {
+        findNavController().navigate(CurrentGameFragmentDirections.actionCurrentGameFragmentToAllGamesFragment())
+    }
+
+    suspend fun insertGame(game: Game) {
         repository.insertGame(game)
     }
 
-    suspend fun deleteGame(game: Game){
+    suspend fun deleteGame(game: Game) {
         repository.deleteGame(game.id)
     }
 }
