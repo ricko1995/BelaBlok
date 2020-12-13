@@ -156,6 +156,7 @@ class GameEntryViewModel @ViewModelInject constructor(
     }
 
     private suspend fun insertGameInDb(player1TotalCallings: Int, player2TotalCallings: Int) {
+        if (lastMatch.value!!.games.isNullOrEmpty()) repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
         val matchId = lastMatch.value!!.match.id
         val p1s = player1Score.value!!.toInt()
         val p2s = player2Score.value!!.toInt()
