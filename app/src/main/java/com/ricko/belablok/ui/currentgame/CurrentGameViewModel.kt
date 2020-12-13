@@ -14,7 +14,6 @@ import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
 import kotlinx.coroutines.*
-import leakcanary.internal.utils.measureDurationMillis
 import java.util.*
 
 class CurrentGameViewModel @ViewModelInject constructor(private val repository: MainRepository) : ViewModel() {
