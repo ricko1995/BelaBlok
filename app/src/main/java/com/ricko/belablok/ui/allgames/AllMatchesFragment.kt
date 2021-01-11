@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ricko.belablok.R
 import com.ricko.belablok.adapters.AllMatchesRvAdapter
+import com.ricko.belablok.adapters.CurrentGameRvAdapter
 import com.ricko.belablok.databinding.FragmentAllMatchesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ class AllMatchesFragment : Fragment(R.layout.fragment_all_matches) {
 
     private lateinit var binding: FragmentAllMatchesBinding
     private val viewModel: AllMatchesViewModel by viewModels()
+    lateinit var rvAllMatchesAdapter: AllMatchesRvAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAllMatchesBinding.inflate(inflater, container, false)
@@ -32,14 +34,23 @@ class AllMatchesFragment : Fragment(R.layout.fragment_all_matches) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        registerObservers()
     }
 
     private fun initRecyclerView() {
-        lifecycleScope.launch {
-            val rvAdapter = AllMatchesRvAdapter(viewModel.matchesWithGames().sortedByDescending { it.match.creationTime })
-            binding.rvAllMatches.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = rvAdapter
+        rvAllMatchesAdapter = AllMatchesRvAdapter()
+        binding.rvAllMatches.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = rvAllMatchesAdapter
+        }
+
+    }
+
+    private fun registerObservers() {
+        viewModel.latestGame.observe(viewLifecycleOwner) { _ ->
+            lifecycleScope.launch {
+                val matches = viewModel.matchesWithGames()
+                rvAllMatchesAdapter.submitListOfMatchesWithGames(matches.sortedByDescending { it.match.creationTime })
             }
         }
     }

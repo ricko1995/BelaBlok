@@ -6,20 +6,32 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.Toast
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ricko.belablok.databinding.ItemAllMatchesBinding
+import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.MatchWithGames
 
-class AllMatchesRvAdapter(private val listOfMatches: List<MatchWithGames>) : RecyclerView.Adapter<AllMatchesRvAdapter.MatchViewHolder>() {
+class AllMatchesRvAdapter() : RecyclerView.Adapter<AllMatchesRvAdapter.MatchViewHolder>() {
     inner class MatchViewHolder(val binding: ItemAllMatchesBinding) : RecyclerView.ViewHolder(binding.root)
+
+    private val diffUtil = object : DiffUtil.ItemCallback<MatchWithGames>() {
+        override fun areItemsTheSame(oldItem: MatchWithGames, newItem: MatchWithGames) = oldItem.match.id == newItem.match.id
+        override fun areContentsTheSame(oldItem: MatchWithGames, newItem: MatchWithGames) = oldItem == newItem
+    }
+
+    private val differ = AsyncListDiffer(this, diffUtil)
+
+    fun submitListOfMatchesWithGames(listOfMatches: List<MatchWithGames>) = differ.submitList(listOfMatches)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MatchViewHolder(
         ItemAllMatchesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
-        val item = listOfMatches[position]
+        val item = differ.currentList[position]// listOfMatches[position]
         holder.binding.matchesVar = item
         holder.binding.root.setOnClickListener {
             val rvAdapter = CurrentGameRvAdapter(null)
@@ -60,7 +72,6 @@ class AllMatchesRvAdapter(private val listOfMatches: List<MatchWithGames>) : Rec
                     requestLayout()
                 }
             }
-//            holder.binding.rvGamesFromMatch.visibility = if (holder.binding.rvGamesFromMatch.visibility == View.VISIBLE) View.GONE else View.VISIBLE
 
         }
     }
@@ -69,5 +80,5 @@ class AllMatchesRvAdapter(private val listOfMatches: List<MatchWithGames>) : Rec
 
     }
 
-    override fun getItemCount() = listOfMatches.size
+    override fun getItemCount() = differ.currentList.size// listOfMatches.size
 }

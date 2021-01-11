@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
+import com.ricko.belablok.ui.masterfragment.MasterFragmentDirections
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -114,7 +115,8 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
     }
 
     fun View.onHistoryClick() {
-        findNavController().navigate(CurrentGameFragmentDirections.actionCurrentGameFragmentToAllGamesFragment())
+//        findNavController().navigate(CurrentGameFragmentDirections.actionCurrentGameFragmentToAllGamesFragment())
+        findNavController().navigate(MasterFragmentDirections.actionMasterFragmentToAllGamesFragment())
     }
 
     suspend fun insertGame(game: Game) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/currentGameFragment">
+    app:startDestination="@id/masterFragment">
 
     <fragment
         android:id="@+id/allGamesFragment"
@@ -22,5 +22,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/masterFragment"
+        android:name="com.ricko.belablok.ui.masterfragment.MasterFragment"
+        android:label="Bela blok (2 VS 2)"
+        tools:layout="@layout/fragment_master_current_game" >
+        <action
+            android:id="@+id/action_masterFragment_to_allGamesFragment"
+            app:destination="@id/allGamesFragment" />
     </fragment>
 </navigation>

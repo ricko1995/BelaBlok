@@ -1,5 +1,7 @@
 package com.ricko.belablok.ui.currentgame
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,9 +34,10 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
 
     private var bottomSheet: GameEntrySheet? = null
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        bottomSheet?.dismiss()
         bottomSheet = null
+        super.onPause()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,14 +57,17 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
                     viewModel.player2Sum.value!! > 1000 ||
                     viewModel.lastMatch.value == null
                 ) viewModel.createNewMatch()
-
-                bottomSheet = GameEntrySheet() { bottomSheet = null } //Prevent Memory Leak
-
-                withContext(Dispatchers.Main) { bottomSheet?.show(childFragmentManager, bottomSheet?.tag) }
+                openBottomSheet()
             }
         }
         initRecyclerView()
         registerObservers()
+    }
+
+    private suspend fun openBottomSheet() {
+        if (bottomSheet != null) return
+        bottomSheet = GameEntrySheet() { bottomSheet = null } //Prevent Memory Leak
+        withContext(Dispatchers.Main) { bottomSheet?.show(childFragmentManager, bottomSheet?.tag) }
     }
 
     private fun initRecyclerView() {
@@ -74,8 +80,6 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
 
     private fun registerObservers() {
         viewModel.lastMatch.observe(viewLifecycleOwner) {
-//            binding.p1score.isSelected = false
-//            binding.p2score.isSelected = false
             if (it != null) {
                 val p1Sum = it.games.map { i -> i.player1Score }.sum() + it.games.map { i -> i.player1Callings }.sum()
                 val p2Sum = it.games.map { i -> i.player2Score }.sum() + it.games.map { i -> i.player2Callings }.sum()
@@ -84,11 +88,9 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
                 currentGameRvAdapter.submitListOfGames(it.games.sortedByDescending { i -> i.creationTime })
                 if (p1Sum > 1000 && p1Sum > p2Sum) {
                     declareWinner(viewModel.player1Name.value)
-//                    binding.p1score.isSelected = true
                 }
                 if (p2Sum > 1000 && p2Sum > p1Sum) {
                     declareWinner(viewModel.player2Name.value)
-//                    binding.p2score.isSelected = true
                 }
             } else {
                 viewModel.player1Sum.value = 0
