@@ -23,6 +23,8 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
 
     val player1Sum = MutableLiveData(0)
     val player2Sum = MutableLiveData(0)
+
+    var isGameOver = false
     val lastMatch = repository.getLatestMatchWithGames()
 
     init {
@@ -70,6 +72,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
         val matchId = UUID.randomUUID().toString()
         val match = Match(player1Name.value.toString(), player2Name.value.toString(), id = matchId)
         repository.insertMatch(match)
+        isGameOver = false
     }
 
     private fun updateMatch(newName: String, updateP1: Boolean) {
