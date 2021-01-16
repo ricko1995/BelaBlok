@@ -1,11 +1,12 @@
 package com.ricko.belablok.db
 
-import androidx.lifecycle.LiveData
+import androidx.annotation.Keep
 import androidx.room.Embedded
 import androidx.room.Relation
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Keep
 data class MatchWithGames(
     @Embedded val match: Match,
     @Relation(

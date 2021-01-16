@@ -1,11 +1,13 @@
 package com.ricko.belablok.db
 
 import android.view.View
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
+@Keep
 data class Game(
     val player1Score: Int,
     val player2Score: Int,

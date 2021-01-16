@@ -30,19 +30,21 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="4"
-                android:autoSizeMaxTextSize="16sp"
-                android:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform"
+                style="?android:attr/buttonBarButtonStyle"
                 android:onClick="@{(v)->viewModelVar.onNewGameClick(v)}"
                 android:onLongClick="@{()->viewModelVar.onLongNewGameClick()}"
                 android:text="Nova partija" />
 
             <Button
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:autoSizeMaxTextSize="16sp"
-                android:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform"
                 android:onClick="@{(v)->viewModelVar.onHistoryClick(v)}"
                 android:text="Povijest" />
 
@@ -77,7 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    android:autoSizeTextType="uniform"
+                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player1Name)}"
                     android:text="@{viewModelVar.player1Name}"
@@ -92,7 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    android:autoSizeTextType="uniform"
+                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player2Name)}"
                     android:text="@{viewModelVar.player2Name}"
