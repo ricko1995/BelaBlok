@@ -84,7 +84,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
 
     fun View.onNewGameClick() {
         viewModelScope.launch {
-            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000 || player1Sum.value!! != player1Sum.value!!) {
+            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000) {
                 createNewMatch()
                 return@launch
             }

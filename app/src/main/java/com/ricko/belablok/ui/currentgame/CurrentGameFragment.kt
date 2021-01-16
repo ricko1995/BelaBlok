@@ -53,7 +53,6 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
             lifecycleScope.launch(Dispatchers.IO) {
                 if (viewModel.player1Sum.value!! > 1000 ||
                     viewModel.player2Sum.value!! > 1000 ||
-                    viewModel.player1Sum.value!! != viewModel.player2Sum.value!! ||
                     viewModel.lastMatch.value == null
                 ) viewModel.createNewMatch()
                 openBottomSheet()
