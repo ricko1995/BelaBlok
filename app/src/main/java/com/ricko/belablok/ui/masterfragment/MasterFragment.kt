@@ -10,13 +10,21 @@ import com.ricko.belablok.ui.allgames.AllMatchesFragment
 import com.ricko.belablok.ui.currentgame.CurrentGameFragment
 
 class MasterFragment : Fragment(R.layout.fragment_master_current_game) {
-    private var isFirst = true
+    private val currentGameFragment = CurrentGameFragment()
+    private val allMatchesFragment = AllMatchesFragment()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val currentGameFragment = CurrentGameFragment()
-        val allMatchesFragment = AllMatchesFragment()
-        if (isFirst) childFragmentManager.beginTransaction().apply {
+    override fun onPause() {
+        super.onPause()
+        childFragmentManager.beginTransaction().apply {
+            remove(currentGameFragment)
+            remove(allMatchesFragment)
+            commit()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        childFragmentManager.beginTransaction().apply {
             if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 add(R.id.flCurrentGamePlaceholder, currentGameFragment)
                 add(R.id.flAllMatchesPlaceholder, allMatchesFragment)
@@ -26,6 +34,6 @@ class MasterFragment : Fragment(R.layout.fragment_master_current_game) {
                 commit()
             }
         }
-        isFirst = false
+
     }
 }

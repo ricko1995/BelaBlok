@@ -3,7 +3,6 @@ package com.ricko.belablok.ui.currentgame
 import android.app.AlertDialog
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import androidx.core.view.setPadding
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -82,7 +81,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
 
     fun View.onNewGameClick() {
         viewModelScope.launch {
-            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000) {
+            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000 || player1Sum.value!! != player1Sum.value!!) {
                 createNewMatch()
                 return@launch
             }
