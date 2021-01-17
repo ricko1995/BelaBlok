@@ -9,10 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.ricko.belablok.R
 import com.ricko.belablok.db.Game
-import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
 import kotlinx.coroutines.launch
-import java.util.*
 
 class GameEntryViewModel @ViewModelInject constructor(
     private val repository: MainRepository
@@ -42,10 +40,8 @@ class GameEntryViewModel @ViewModelInject constructor(
     fun onScoreBtnClick(number: Int) {
         val scoreToCalculate = if (selectedPlayer1.value!!) player1Score else if (selectedPlayer2.value!!) player2Score else return
         val otherPlayerScore = if (selectedPlayer2.value!!) player1Score else if (selectedPlayer1.value!!) player2Score else return
-        val callingsToCalculate = if (selectedPlayer1.value!!) player1Callings else if (selectedPlayer2.value!!) player2Callings else return
-        val otherPlayerCallings = if (selectedPlayer2.value!!) player1Callings else if (selectedPlayer1.value!!) player2Callings else return
         if (number > 15 || number < -15) {
-            addCallings(number, callingsToCalculate, otherPlayerCallings)
+            calculateCallings(number)
             return
         }
 
@@ -78,7 +74,22 @@ class GameEntryViewModel @ViewModelInject constructor(
         player2Callings.value = ""
     }
 
-    private fun addCallings(number: Int, callingsToCalculate: MutableLiveData<String>, otherPlayerCallings: MutableLiveData<String>) {
+    private fun calculateCallings(number: Int) {
+        if (selectedPlayer1.value!! && number != 20 && number > 0) player2Callings.value = ""
+        if (selectedPlayer2.value!! && number != 20 && number > 0) player1Callings.value = ""
+
+        val listOfCallingsP1 = if (player1Callings.value.isNullOrEmpty()) emptyList() else player1Callings.value!!.split("+").map { it.toInt() }
+        val listOfCallingsP2 = if (player2Callings.value.isNullOrEmpty()) emptyList() else player2Callings.value!!.split("+").map { it.toInt() }
+
+        if ((listOfCallingsP1.size + listOfCallingsP2.size) > 4 && number > 0) return
+        if (selectedPlayer1.value!! && listOfCallingsP1.filter { it == number }.size > if (number == 20) 4 else 3) return
+        if (selectedPlayer2.value!! && listOfCallingsP2.filter { it == number }.size > if (number == 20) 4 else 3) return
+
+        if (selectedPlayer1.value!!) addCallings(number, player1Callings, player2Callings)
+        else addCallings(number, player2Callings, player1Callings)
+    }
+
+    private fun addCallings(number: Int, callingsToCalculate: MutableLiveData<String?>, otherPlayerCallings: MutableLiveData<String?>) {
         when (number) {
             in 0..100 -> {
                 callingsToCalculate.value = StringBuilder(callingsToCalculate.value!!)
@@ -111,15 +122,17 @@ class GameEntryViewModel @ViewModelInject constructor(
         if (id == R.id.player1FullWin) {
             player1Score.value = "162"
             player2Score.value = "0"
+            player2Callings.value = ""
         } else if (id == R.id.player2FullWin) {
             player2Score.value = "162"
             player1Score.value = "0"
+            player1Callings.value = ""
         }
     }
 
 
     fun View.onConfirmEntryClick(toggleGroup: MaterialButtonToggleGroup) {
-        if (player1Score.value == "0" && player2Score.value == "0") {
+        if (player1Score.value == "0" && player2Score.value == "0" || player1Score.value == "81") {
             Toast.makeText(context, "Krivi Unos!", Toast.LENGTH_SHORT).show()
             return
         }
