@@ -26,16 +26,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="4"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeTextType="uniform"
-                style="?android:attr/buttonBarButtonStyle"
                 android:onClick="@{(v)->viewModelVar.onNewGameClick(v)}"
-                android:onLongClick="@{()->viewModelVar.onLongNewGameClick()}"
-                android:text="Nova partija" />
+                android:text="@string/new_game"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform" />
 
             <Button
                 style="?android:attr/buttonBarButtonStyle"
@@ -43,10 +42,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeTextType="uniform"
                 android:onClick="@{(v)->viewModelVar.onHistoryClick(v)}"
-                android:text="Povijest" />
+                android:text="@string/history"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform" />
 
         </LinearLayout>
 
@@ -79,10 +78,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player1Name)}"
                     android:text="@{viewModelVar.player1Name}"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/p1score"
                     app:layout_constraintEnd_toStartOf="@+id/view"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,10 +93,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player2Name)}"
                     android:text="@{viewModelVar.player2Name}"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/p2score"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
@@ -202,6 +201,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha=".1"
+            android:contentDescription="@string/background_image"
             android:scaleType="centerCrop"
             android:src="@drawable/playing_card_back"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -225,6 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:contentDescription="@string/new_entry_fab"
             android:src="@drawable/ic_pen"
             app:fabSize="auto"
             app:layout_constraintBottom_toBottomOf="parent"

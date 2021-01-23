@@ -28,11 +28,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:autoSizeMaxTextSize="16sp"
-                android:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform"
                 android:onClick="@{(v)->viewModelVar.onNewGameClick(v)}"
-                android:onLongClick="@{()->viewModelVar.onLongNewGameClick()}"
-                android:text="Nova partija" />
+                android:text="@string/new_game" />
 
         </LinearLayout>
 
@@ -65,7 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    android:autoSizeTextType="uniform"
+                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player1Name)}"
                     android:text="@{viewModelVar.player1Name}"
@@ -80,7 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
-                    android:autoSizeTextType="uniform"
+                    app:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player2Name)}"
                     android:text="@{viewModelVar.player2Name}"
@@ -194,7 +193,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/v1"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            android:contentDescription="@string/background_image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCurrentGame"
@@ -214,6 +214,7 @@
             android:src="@drawable/ic_pen"
             app:fabSize="auto"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/new_entry_fab" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.ricko.belablok.ui.currentgame
 
 import android.app.AlertDialog
+import android.content.Context
 import android.view.View
 import android.widget.EditText
 import androidx.core.view.setPadding
@@ -9,17 +10,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
+import com.ricko.belablok.R
 import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
 import com.ricko.belablok.ui.masterfragment.MasterFragmentDirections
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.*
 import java.util.*
 
-class CurrentGameViewModel @ViewModelInject constructor(private val repository: MainRepository) : ViewModel() {
+class CurrentGameViewModel @ViewModelInject constructor(
+    private val repository: MainRepository,
+    @ActivityContext private val context: Context
+) : ViewModel() {
 
-    val player1Name = MutableLiveData("MI")
-    val player2Name = MutableLiveData("VI")
+    val player1Name = MutableLiveData(context.getString(R.string.team1_name))
+    val player2Name = MutableLiveData(context.getString(R.string.team2_name))
 
     val player1Sum = MutableLiveData(0)
     val player2Sum = MutableLiveData(0)
@@ -29,13 +35,14 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            withTimeout(1000) {
-                while (lastMatch.value == null) Unit
+            withTimeout(2000) {
+                while (lastMatch.value == null) delay(100)
                 withContext(Dispatchers.Main) {
                     player1Name.value = lastMatch.value!!.match.player1Name
                     player2Name.value = lastMatch.value!!.match.player2Name
                 }
             }
+
         }
 
     }
@@ -46,7 +53,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
             setText(currentName)
         }
         AlertDialog.Builder(context).apply {
-            setPositiveButton("OK") { _, _ ->
+            setPositiveButton(context.getString(R.string.ok_text)) { _, _ ->
                 when (currentName) {
                     player1Name.value -> {
                         player1Name.value = et.text.toString()
@@ -60,8 +67,8 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
                     }
                 }
             }
-            setNegativeButton("Cancel") { _, _ -> }
-            setTitle("Rename")
+            setNegativeButton(context.getString(R.string.cancel_text)) { _, _ -> }
+            setTitle(context.getString(R.string.rename_text))
         }.create().apply {
             setView(et)
             show()
@@ -90,15 +97,15 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
             }
             if (player1Sum.value!! < 1000 && player2Sum.value!! < 1000 && player1Sum.value!! > 0 && player2Sum.value!! > 0) {
                 AlertDialog.Builder(context)
-                    .setTitle("Izbriši partiju u tijeku?")
-                    .setNegativeButton("Izbriši") { _, _ ->
+                    .setTitle(context.getString(R.string.delete_game_in_progress_text))
+                    .setNegativeButton(context.getString(R.string.delete_text)) { _, _ ->
                         for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) {
                             repository.deleteGame(game.id)
                             repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
                         }
                     }
-                    .setNeutralButton("Spremi partiju") { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
-                    .setPositiveButton("Odustani") { _, _ -> }
+                    .setNeutralButton(context.getString(R.string.save_game_text)) { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
+                    .setPositiveButton(context.getString(R.string.cancel_text)) { _, _ -> }
                     .create()
                     .show()
             } else {
@@ -109,15 +116,7 @@ class CurrentGameViewModel @ViewModelInject constructor(private val repository: 
         }
     }
 
-    fun onLongNewGameClick(): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
-//            repository.deleteAll()//TODO REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!
-        }
-        return true
-    }
-
     fun View.onHistoryClick() {
-//        findNavController().navigate(CurrentGameFragmentDirections.actionCurrentGameFragmentToAllGamesFragment())
         findNavController().navigate(MasterFragmentDirections.actionMasterFragmentToAllGamesFragment())
     }
 

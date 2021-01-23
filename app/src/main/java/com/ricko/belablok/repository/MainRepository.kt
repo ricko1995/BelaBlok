@@ -25,4 +25,5 @@ class MainRepository @Inject constructor(private val dao: GameDao) {
     }
 
     suspend fun deleteGame(gameId: String) = dao.deleteGame(gameId)
+    suspend fun deleteMatch(matchId: String) = dao.deleteMatch(matchId)
 }

@@ -40,7 +40,7 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
-                    android:text="Štiglja"
+                    android:text="@string/full_game_text"
                     app:strokeColor="@color/black" />
 
                 <Button
@@ -52,7 +52,7 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:onClick="@{(v)->viewModelVar.onToggleBtnClick(v, toggleBtnGroup)}"
-                    android:text="Štiglja"
+                    android:text="@string/full_game_text"
                     app:strokeColor="@color/black" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -393,7 +393,7 @@
                 android:layout_height="0dp"
                 app:autoSizeTextType="uniform"
                 android:onClick="@{(v)->viewModelVar.onConfirmEntryClick(v, toggleBtnGroup)}"
-                android:text="Upiši"
+                android:text="@string/enter_text"
                 app:layout_constraintBottom_toBottomOf="@+id/button14"
                 app:layout_constraintEnd_toEndOf="@+id/player2Score"
                 app:layout_constraintStart_toStartOf="@+id/player2Score"

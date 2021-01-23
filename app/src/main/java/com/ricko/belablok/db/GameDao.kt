@@ -40,4 +40,7 @@ interface GameDao {
     @Query("DELETE FROM game WHERE id = :gameId")
     suspend fun deleteGame(gameId: String)
 
+    @Query("DELETE FROM `match` WHERE id = :matchId")
+    suspend fun deleteMatch(matchId: String)
+
 }

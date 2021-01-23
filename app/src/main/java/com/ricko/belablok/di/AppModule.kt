@@ -2,6 +2,8 @@ package com.ricko.belablok.di
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.createDataStore
 import androidx.room.Room
 import com.ricko.belablok.db.AppDatabase
@@ -19,7 +21,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDataStore(@ApplicationContext context: Context) = context.createDataStore("currentMatchIdStorage")
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.createDataStore("currentMatchIdStorage")
 
     @Singleton
     @Provides

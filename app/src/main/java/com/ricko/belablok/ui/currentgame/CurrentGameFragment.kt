@@ -1,14 +1,12 @@
 package com.ricko.belablok.ui.currentgame
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ricko.belablok.R
@@ -16,6 +14,7 @@ import com.ricko.belablok.adapters.CurrentGameRvAdapter
 import com.ricko.belablok.databinding.FragmentCurrentGameBinding
 import com.ricko.belablok.db.Game
 import com.ricko.belablok.ui.gameentry.GameEntrySheet
+import com.ricko.belablok.ui.masterfragment.MasterFragmentDirections
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.createBalloon
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +26,7 @@ import kotlinx.coroutines.withContext
 class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGameRvAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentCurrentGameBinding
-    private val viewModel: CurrentGameViewModel by activityViewModels()
+    private val viewModel: CurrentGameViewModel by viewModels()
     lateinit var currentGameRvAdapter: CurrentGameRvAdapter
 
     private var bottomSheet: GameEntrySheet? = null
@@ -38,8 +37,25 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
         super.onPause()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_settings, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                findNavController().navigate(MasterFragmentDirections.actionMasterFragmentToSettingsFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCurrentGameBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.run {
             viewModelVar = viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -64,7 +80,7 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
 
     private suspend fun openBottomSheet() {
         if (bottomSheet != null) return
-        bottomSheet = GameEntrySheet() { bottomSheet = null } //Prevent Memory Leak
+        bottomSheet = GameEntrySheet { bottomSheet = null } //Prevent Memory Leak
         withContext(Dispatchers.Main) { bottomSheet?.show(childFragmentManager, bottomSheet?.tag) }
     }
 

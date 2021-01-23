@@ -5,16 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
-import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ricko.belablok.databinding.ItemAllMatchesBinding
-import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.MatchWithGames
 
-class AllMatchesRvAdapter() : RecyclerView.Adapter<AllMatchesRvAdapter.MatchViewHolder>() {
+class AllMatchesRvAdapter : RecyclerView.Adapter<AllMatchesRvAdapter.MatchViewHolder>() {
     inner class MatchViewHolder(val binding: ItemAllMatchesBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object : DiffUtil.ItemCallback<MatchWithGames>() {
@@ -31,7 +28,7 @@ class AllMatchesRvAdapter() : RecyclerView.Adapter<AllMatchesRvAdapter.MatchView
     )
 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
-        val item = differ.currentList[position]// listOfMatches[position]
+        val item = differ.currentList[position]
         holder.binding.matchesVar = item
         holder.binding.root.setOnClickListener {
             val rvAdapter = CurrentGameRvAdapter(null)
@@ -76,9 +73,5 @@ class AllMatchesRvAdapter() : RecyclerView.Adapter<AllMatchesRvAdapter.MatchView
         }
     }
 
-    private fun initGamesRv() {
-
-    }
-
-    override fun getItemCount() = differ.currentList.size// listOfMatches.size
+    override fun getItemCount() = differ.currentList.size
 }
