@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ricko.belablok.R
 import com.ricko.belablok.adapters.AllMatchesRvAdapter
-import com.ricko.belablok.adapters.CurrentGameRvAdapter
 import com.ricko.belablok.databinding.FragmentAllMatchesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

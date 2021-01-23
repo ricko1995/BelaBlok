@@ -13,6 +13,7 @@
         <variable
             name="mContext"
             type="android.content.Context" />
+
         <variable
             name="mActivity"
             type="androidx.fragment.app.FragmentActivity" />
@@ -40,14 +41,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:text="@={viewModelSettings.currentLanguage}"
-                app:fillDropDownMenu="@{mContext}"/>
+                app:fillDropDownMenu="@{mContext}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{(v) -> viewModelSettings.changeLanguage(v, mActivity)}"
+            android:onClick="@{()->viewModelSettings.restoreDefaultSettings()}"
             android:text="@string/restore_to_default_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

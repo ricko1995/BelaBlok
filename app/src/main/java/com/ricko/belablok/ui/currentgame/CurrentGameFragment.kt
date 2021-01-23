@@ -118,7 +118,7 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
     private fun declareWinner(playerName: String?) {
         bottomSheet?.dismiss()
         bottomSheet = null
-        Toast.makeText(requireContext(), "$playerName su pobjedili!!!", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), "$playerName ${getString(R.string.has_won_text)}", Toast.LENGTH_LONG).show()
         viewModel.isGameOver = true
     }
 
@@ -126,7 +126,7 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
         createBalloon(requireContext()) {
             setArrowVisible(false)
             setAlpha(0.8f)
-            setText("Izbriši igru")
+            setText(getString(R.string.delete_game_text))
             setPadding(8)
             setTextSize(26f)
             setLifecycleOwner(viewLifecycleOwner)
@@ -134,8 +134,8 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
             setOnBalloonClickListener {
                 lifecycleScope.launch {
                     viewModel.deleteGame(game)
-                    Snackbar.make(binding.root, "Igra je izbrisana!", 2000)
-                        .setAction("Poništi") {
+                    Snackbar.make(binding.root, getString(R.string.game_deleted_text), 2000)
+                        .setAction(getString(R.string.undo_text)) {
                             lifecycleScope.launch { viewModel.insertGame(game) }
                         }.show()
                 }

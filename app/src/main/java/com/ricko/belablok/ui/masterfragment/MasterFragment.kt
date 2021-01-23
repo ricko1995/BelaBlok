@@ -1,9 +1,6 @@
 package com.ricko.belablok.ui.masterfragment
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.view.View
-import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.ricko.belablok.R
 import com.ricko.belablok.ui.allgames.AllMatchesFragment

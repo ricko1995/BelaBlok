@@ -133,7 +133,7 @@ class GameEntryViewModel @ViewModelInject constructor(
 
     fun View.onConfirmEntryClick(toggleGroup: MaterialButtonToggleGroup) {
         if (player1Score.value == "0" && player2Score.value == "0" || player1Score.value == "81") {
-            Toast.makeText(context, "Krivi Unos!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.wrong_entry_text), Toast.LENGTH_SHORT).show()
             return
         }
         if (player1Score.value == "0") player1Callings.value = ""

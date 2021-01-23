@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="languages">
+        <item>Croatian</item>
+        <item>English</item>
+        <item>German</item>
+        <item>Français</item>
+    </string-array>
+    <string name="app_name">Bloc Bela</string>
+    <string name="team1_name">Moi</string>
+    <string name="team2_name">Toi</string>
+    <string name="app_label">Bloc Bela (2 VS 2)</string>
+    <string name="cancel_text">Annuler</string>
+    <string name="rename_text">Renommer</string>
+    <string name="delete_game_in_progress_text">Supprimer le jeu en cours?</string>
+    <string name="delete_text">Effacer</string>
+    <string name="save_game_text">Sauvegarder la partie</string>
+    <string name="new_game">Nouveau jeu</string>
+    <string name="history">L\'histoire</string>
+    <string name="settings_label">Réglages</string>
+    <string name="language_text">Langue</string>
+    <string name="enter_text">Entrer</string>
+    <string name="full_game_text">Partie complète</string>
+    <string name="restore_to_default_text">Rétablir les options par défaut</string>
+    <string name="delete_game_text">Supprimer le jeu</string>
+    <string name="game_deleted_text">Le jeu est supprimé</string>
+    <string name="undo_text">Annuler</string>
+    <string name="has_won_text">a remporté le match!</string>
+    <string name="wrong_entry_text">Mauvaise touche!</string>
+</resources>

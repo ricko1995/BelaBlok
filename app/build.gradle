@@ -88,6 +88,7 @@ dependencies {
 
     //DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+    implementation "androidx.datastore:datastore-preferences-core:1.0.0-alpha06"
 
     //Pop-up balloon notification
     implementation "com.github.skydoves:balloon:1.2.2"

@@ -6,8 +6,7 @@
         <item>Njemački</item>
         <item>Francuski</item>
     </string-array>
-    <string name="app_name">Bela Blok</string>
-    <string name="ok_text">OK</string>
+    <string name="app_name">Bela Block</string>
     <string name="cancel_text">Odustani</string>
     <string name="rename_text">Preimenuj</string>
     <string name="delete_game_in_progress_text">Izbriši igru u tijeku?</string>
@@ -18,8 +17,14 @@
     <string name="settings_label">Postavke</string>
     <string name="language_text">Jezik</string>
     <string name="enter_text">Upiši</string>
-    <string name="full_game_text">Štiglja</string>
+    <string name="full_game_text">Štihak</string>
     <string name="restore_to_default_text">Vrati na početne postavke</string>
     <string name="team1_name">MI</string>
     <string name="team2_name">VI</string>
+    <string name="delete_game_text">Izbriši igru</string>
+    <string name="game_deleted_text">Igra je izbrisana</string>
+    <string name="undo_text">Poništi</string>
+    <string name="has_won_text">su pobjedili!</string>
+    <string name="wrong_entry_text">Krivi unos</string>
+    <string name="app_label" translatable="false">Bela Block (2 VS 2)</string>
 </resources>

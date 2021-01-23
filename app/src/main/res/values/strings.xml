@@ -8,7 +8,7 @@
     <string name="app_name">Bela Blok</string>
     <string name="team1_name">Team 1</string>
     <string name="team2_name">Team 2</string>
-    <string name="ok_text">OK</string>
+    <string name="ok_text" translatable="false">OK</string>
     <string name="cancel_text">Cancel</string>
     <string name="rename_text">Rename</string>
     <string name="delete_game_in_progress_text">Delete game in progress?</string>
@@ -16,7 +16,7 @@
     <string name="save_game_text">Save game</string>
     <string name="new_game">New game</string>
     <string name="history">History</string>
-    <string name="app_label" translatable="false">Bela blok (2 VS 2)</string>
+    <string name="app_label">Bela blok (2 VS 2)</string>
     <string name="background_image" translatable="false">background_image</string>
     <string name="new_entry_fab" translatable="false">new_entry_fab</string>
     <string name="settings_label">Settings</string>
@@ -24,4 +24,9 @@
     <string name="enter_text">Enter</string>
     <string name="full_game_text">Full Game</string>
     <string name="restore_to_default_text">Restore to default</string>
+    <string name="delete_game_text">Delete game</string>
+    <string name="game_deleted_text">Game is deleted</string>
+    <string name="undo_text">Undo</string>
+    <string name="has_won_text">won the match!</string>
+    <string name="wrong_entry_text">Wrong entry!</string>
 </resources>
