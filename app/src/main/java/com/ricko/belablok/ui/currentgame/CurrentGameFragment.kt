@@ -67,9 +67,8 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
         super.onViewCreated(view, savedInstanceState)
         binding.fabOpenBottomSheet.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                if (viewModel.player1Sum.value!! > 1000 ||
-                    viewModel.player2Sum.value!! > 1000 ||
-                    viewModel.lastMatch.value == null
+                if (viewModel.player1Sum.value!! != viewModel.player2Sum.value!! &&
+                    (viewModel.player1Sum.value!! > 1000 || viewModel.player2Sum.value!! > 1000 || viewModel.lastMatch.value == null)
                 ) viewModel.createNewMatch()
                 openBottomSheet()
             }
@@ -118,6 +117,7 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
     private fun declareWinner(playerName: String?) {
         bottomSheet?.dismiss()
         bottomSheet = null
+        if (viewModel.isGameOver) return
         Toast.makeText(requireContext(), "$playerName ${getString(R.string.has_won_text)}", Toast.LENGTH_LONG).show()
         viewModel.isGameOver = true
     }

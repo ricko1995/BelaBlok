@@ -37,7 +37,39 @@ class GameEntryViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onScoreBtnClick(number: Int) {
+    fun onScoreLongClick(playerToWin: String, toggleGroup: MaterialButtonToggleGroup): Boolean {
+        toggleGroup.clearChecked()
+        when (playerToWin) {
+            "p1" -> {
+                addCallings(-90, player2Callings, player1Callings)
+                selectedPlayer1.value = true
+                selectedPlayer2.value = false
+                player1Score.value = "162"
+                player2Score.value = "0"
+                player1Callings.value =
+                    StringBuilder(player1Callings.value!!)
+                        .append(if (player1Callings.value.isNullOrEmpty()) "" else "+")
+                        .append(player2Callings.value!!).toString()
+                player2Callings.value = ""
+            }
+            "p2" -> {
+                addCallings(-90, player1Callings, player2Callings)
+                selectedPlayer1.value = false
+                selectedPlayer2.value = true
+                player1Score.value = "0"
+                player2Score.value = "162"
+                player2Callings.value =
+                    StringBuilder(player2Callings.value!!)
+                        .append(if (player2Callings.value.isNullOrEmpty()) "" else "+")
+                        .append(player1Callings.value!!).toString()
+                player1Callings.value = ""
+            }
+        }
+        return true
+    }
+
+    fun onScoreBtnClick(number: Int, toggleGroup: MaterialButtonToggleGroup) {
+        toggleGroup.clearGroupSelection()
         val scoreToCalculate = if (selectedPlayer1.value!!) player1Score else if (selectedPlayer2.value!!) player2Score else return
         val otherPlayerScore = if (selectedPlayer2.value!!) player1Score else if (selectedPlayer1.value!!) player2Score else return
         if (number > 15 || number < -15) {
@@ -118,15 +150,26 @@ class GameEntryViewModel @ViewModelInject constructor(
     }
 
     fun View.onToggleBtnClick(toggleGroup: MaterialButtonToggleGroup) {
-        if (toggleGroup.checkedButtonIds.isNullOrEmpty()) return
+        if (toggleGroup.checkedButtonIds.isNullOrEmpty()) {
+            addCallings(-90, player1Callings, player2Callings)
+            addCallings(-90, player2Callings, player1Callings)
+            return
+        }
+
         if (id == R.id.player1FullWin) {
             player1Score.value = "162"
             player2Score.value = "0"
             player2Callings.value = ""
+            selectedPlayer1.value = true
+            selectedPlayer2.value = false
+            calculateCallings(90)
         } else if (id == R.id.player2FullWin) {
             player2Score.value = "162"
             player1Score.value = "0"
             player1Callings.value = ""
+            selectedPlayer2.value = true
+            selectedPlayer1.value = false
+            calculateCallings(90)
         }
     }
 
@@ -152,20 +195,19 @@ class GameEntryViewModel @ViewModelInject constructor(
                 list.forEach { i -> player2TotalCallings += i }
             }
         }
-        if (toggleGroup.checkedButtonId == R.id.player1FullWin) {
-            player1TotalCallings += 90
-            player2TotalCallings = 0
-        }
-        if (toggleGroup.checkedButtonId == R.id.player2FullWin) {
-            player2TotalCallings += 90
-            player1TotalCallings = 0
-        }
-
         viewModelScope.launch {
             insertGameInDb(player1TotalCallings, player2TotalCallings)
+            toggleGroup.clearGroupSelection()
             toggleGroup.clearChecked()
             onCancelClick()
         }
+    }
+
+    private fun MaterialButtonToggleGroup.clearGroupSelection() {
+        if (selectedPlayer1.value!!) addCallings(-90, player2Callings, player1Callings)
+        else addCallings(-90, player1Callings, player2Callings)
+        if (selectedPlayer1.value!! && checkedButtonId == R.id.player2FullWin) clearChecked()
+        if (selectedPlayer2.value!! && checkedButtonId == R.id.player1FullWin) clearChecked()
     }
 
     private suspend fun insertGameInDb(player1TotalCallings: Int, player2TotalCallings: Int) {

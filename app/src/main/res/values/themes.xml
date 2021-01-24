@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorSurface">@color/white</item>
     </style>
 
     <style name="Theme.BelaBlok.Dark" parent="Theme.MaterialComponents">
@@ -26,6 +27,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorSurface">@color/black</item>
     </style>
 
     <style name="Widget.MaterialComponents.Button.OutlinedButton.NoRadius" parent="Widget.MaterialComponents.Button.OutlinedButton">

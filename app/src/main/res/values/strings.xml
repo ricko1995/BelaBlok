@@ -16,7 +16,7 @@
     <string name="save_game_text">Save game</string>
     <string name="new_game">New game</string>
     <string name="history">History</string>
-    <string name="app_label">Bela blok (2 VS 2)</string>
+    <string name="app_label" translatable="false">Bela blok (2 VS 2)</string>
     <string name="background_image" translatable="false">background_image</string>
     <string name="new_entry_fab" translatable="false">new_entry_fab</string>
     <string name="settings_label">Settings</string>
@@ -29,4 +29,5 @@
     <string name="undo_text">Undo</string>
     <string name="has_won_text">won the match!</string>
     <string name="wrong_entry_text">Wrong entry!</string>
+    <string name="dark_theme_text">Dark Theme</string>
 </resources>

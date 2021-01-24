@@ -22,7 +22,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:padding="16dp"
+        android:background="?attr/colorSurface">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_spinner"
@@ -44,14 +45,26 @@
                 app:fillDropDownMenu="@{mContext}" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:visibility="gone"
+            android:id="@+id/switchTheme"
+            android:layout_width="match_parent"
+            android:checked="@={viewModelSettings.isDarkThemeOn()}"
+            android:onClick="@{(v)->viewModelSettings.themeChange(v)}"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_dark_mode"
+            android:text="@string/dark_theme_text"
+            app:layout_constraintTop_toBottomOf="@+id/til_spinner"
+            tools:layout_editor_absoluteX="0dp" />
+
         <Button
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModelSettings.restoreDefaultSettings()}"
+            android:onClick="@{(v)->viewModelSettings.restoreDefaultSettings(v)}"
             android:text="@string/restore_to_default_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_spinner" />
+            app:layout_constraintTop_toBottomOf="@id/switchTheme" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

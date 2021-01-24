@@ -30,13 +30,17 @@ class CurrentGameViewModel @ViewModelInject constructor(
     val player1Sum = MutableLiveData(0)
     val player2Sum = MutableLiveData(0)
 
-    var isGameOver = false
+    var isGameOver = true
     val lastMatch = repository.getLatestMatchWithGames()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             withTimeout(2000) {
                 while (lastMatch.value == null) delay(100)
+                if (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } < 1000 &&
+                    lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings } < 1000 ||
+                    (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } == lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings }))
+                    isGameOver = false
                 withContext(Dispatchers.Main) {
                     player1Name.value = lastMatch.value!!.match.player1Name
                     player2Name.value = lastMatch.value!!.match.player2Name
@@ -56,12 +60,12 @@ class CurrentGameViewModel @ViewModelInject constructor(
             setPositiveButton(context.getString(R.string.ok_text)) { _, _ ->
                 when (currentName) {
                     player1Name.value -> {
-                        player1Name.value = et.text.toString()
+                        player1Name.value = et.text.toString().trim()
                         if (lastMatch.value == null) viewModelScope.launch(Dispatchers.IO) { createNewMatch() }
                         else updateMatch(et.text.toString(), true)
                     }
                     player2Name.value -> {
-                        player2Name.value = et.text.toString()
+                        player2Name.value = et.text.toString().trim()
                         if (lastMatch.value == null) viewModelScope.launch(Dispatchers.IO) { createNewMatch() }
                         else updateMatch(et.text.toString(), false)
                     }

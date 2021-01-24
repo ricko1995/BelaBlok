@@ -9,7 +9,6 @@
     <string name="app_name">Bloc Bela</string>
     <string name="team1_name">Moi</string>
     <string name="team2_name">Toi</string>
-    <string name="app_label">Bloc Bela (2 VS 2)</string>
     <string name="cancel_text">Annuler</string>
     <string name="rename_text">Renommer</string>
     <string name="delete_game_in_progress_text">Supprimer le jeu en cours?</string>
@@ -27,4 +26,5 @@
     <string name="undo_text">Annuler</string>
     <string name="has_won_text">a remporté le match!</string>
     <string name="wrong_entry_text">Mauvaise touche!</string>
+    <string name="dark_theme_text">Thème sombre</string>
 </resources>

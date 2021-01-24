@@ -26,5 +26,5 @@
     <string name="undo_text">Poništi</string>
     <string name="has_won_text">su pobjedili!</string>
     <string name="wrong_entry_text">Krivi unos</string>
-    <string name="app_label" translatable="false">Bela Block (2 VS 2)</string>
+    <string name="dark_theme_text">Tamna tema</string>
 </resources>
