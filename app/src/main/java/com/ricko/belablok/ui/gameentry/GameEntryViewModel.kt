@@ -48,7 +48,7 @@ class GameEntryViewModel @ViewModelInject constructor(
                 player2Score.value = "0"
                 player1Callings.value =
                     StringBuilder(player1Callings.value!!)
-                        .append(if (player1Callings.value.isNullOrEmpty()) "" else "+")
+                        .append(if (player1Callings.value.isNullOrEmpty() || player2Callings.value.isNullOrEmpty()) "" else "+")
                         .append(player2Callings.value!!).toString()
                 player2Callings.value = ""
             }
@@ -60,7 +60,7 @@ class GameEntryViewModel @ViewModelInject constructor(
                 player2Score.value = "162"
                 player2Callings.value =
                     StringBuilder(player2Callings.value!!)
-                        .append(if (player2Callings.value.isNullOrEmpty()) "" else "+")
+                        .append(if (player1Callings.value.isNullOrEmpty() || player2Callings.value.isNullOrEmpty()) "" else "+")
                         .append(player1Callings.value!!).toString()
                 player1Callings.value = ""
             }

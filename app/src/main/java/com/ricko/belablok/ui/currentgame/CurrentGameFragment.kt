@@ -19,6 +19,7 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.createBalloon
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -134,6 +135,9 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
             setOnBalloonClickListener {
                 lifecycleScope.launch {
                     viewModel.deleteGame(game)
+                    delay(100)
+                    if ((viewModel.player1Sum.value!! < 1000 && viewModel.player2Sum.value!! < 1000) || viewModel.player1Sum == viewModel.player2Sum)
+                        viewModel.isGameOver = false
                     Snackbar.make(binding.root, getString(R.string.game_deleted_text), 2000)
                         .setAction(getString(R.string.undo_text)) {
                             lifecycleScope.launch { viewModel.insertGame(game) }
