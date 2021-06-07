@@ -78,7 +78,8 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
         binding.fabOpenBottomSheet.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 dataStore.data.map { it[MAX_SCORE_KEY] ?: 1000 }.collect { maxScore ->
-                    if (viewModel.player1Sum.value!! > maxScore || viewModel.player2Sum.value!! > maxScore || viewModel.lastMatch.value == null) {
+                    if ((viewModel.player1Sum.value!! > maxScore || viewModel.player2Sum.value!! > maxScore) &&  viewModel.player1Sum.value!! != viewModel.player2Sum.value!! || viewModel.lastMatch.value == null)
+                    {
                         viewModel.createNewMatch()
                     }
                     openBottomSheet()
