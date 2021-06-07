@@ -73,16 +73,18 @@ class CurrentGameViewModel @ViewModelInject constructor(
         }
         AlertDialog.Builder(context).apply {
             setPositiveButton(context.getString(R.string.ok_text)) { _, _ ->
+                println(lastMatch.value == null)
+                println(currentName)
                 when (currentName) {
                     player1Name.value -> {
                         player1Name.value = et.text.toString().trim()
                         if (lastMatch.value == null) viewModelScope.launch(Dispatchers.IO) { createNewMatch() }
-                        else updateMatch(et.text.toString(), true)
+                        else CoroutineScope(Dispatchers.IO).launch { updateMatch(et.text.toString(), true) }
                     }
                     player2Name.value -> {
                         player2Name.value = et.text.toString().trim()
                         if (lastMatch.value == null) viewModelScope.launch(Dispatchers.IO) { createNewMatch() }
-                        else updateMatch(et.text.toString(), false)
+                        else viewModelScope.launch(Dispatchers.IO){ updateMatch(et.text.toString(), false) }
                     }
                 }
             }
@@ -101,15 +103,17 @@ class CurrentGameViewModel @ViewModelInject constructor(
         isGameOver = false
     }
 
-    private fun updateMatch(newName: String, updateP1: Boolean) {
-        viewModelScope.launch {
-            if (updateP1) repository.insertMatch(lastMatch.value!!.match.copy(player1Name = newName))
-            else repository.insertMatch(lastMatch.value!!.match.copy(player2Name = newName))
-        }
+    private suspend fun updateMatch(newName: String, updateP1: Boolean) {
+//        println("/////////////////////////////////////")
+//        viewModelScope.launch {
+            println("**********************************")
+        if (updateP1) repository.insertMatch(lastMatch.value!!.match.copy(player1Name = newName))
+        else repository.insertMatch(lastMatch.value!!.match.copy(player2Name = newName))
+//        }
     }
 
     fun View.onNewGameClick() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             dataStore.data.map { it[MAX_SCORE_KEY] ?: 1000 }.collect { maxScore ->
                 if (lastMatch.value == null || player1Sum.value!! > maxScore || player2Sum.value!! > maxScore) {
                     createNewMatch()
@@ -129,7 +133,7 @@ class CurrentGameViewModel @ViewModelInject constructor(
                         .create()
                         .show()
                 } else {
-                    viewModelScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.IO) {
                         repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
                     }
                 }
