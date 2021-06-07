@@ -14,8 +14,8 @@ android {
         applicationId "com.ricko.belablok"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.5.2"
+        versionCode 9
+        versionName "1.6.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,8 +65,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
     // Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
 
     // Room
     implementation "androidx.room:room-runtime:2.2.6"

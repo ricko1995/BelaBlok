@@ -5,6 +5,11 @@
         <item>German</item>
         <item>French</item>
     </string-array>
+    <string-array name="max_score_array">
+        <item>501</item>
+        <item>701</item>
+        <item>1001</item>
+    </string-array>
     <string name="app_name">Bela Blok</string>
     <string name="team1_name">Team 1</string>
     <string name="team2_name">Team 2</string>

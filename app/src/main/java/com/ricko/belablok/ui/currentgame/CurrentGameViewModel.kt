@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.View
 import android.widget.EditText
 import androidx.core.view.setPadding
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,13 +17,19 @@ import com.ricko.belablok.db.Game
 import com.ricko.belablok.db.Match
 import com.ricko.belablok.repository.MainRepository
 import com.ricko.belablok.ui.masterfragment.MasterFragmentDirections
+import com.ricko.belablok.util.Constants.MAX_SCORE_KEY
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import java.util.*
 
 class CurrentGameViewModel @ViewModelInject constructor(
     private val repository: MainRepository,
-    @ActivityContext private val context: Context
+    @ActivityContext private val context: Context,
+    private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
     val player1Name = MutableLiveData(context.getString(R.string.team1_name))
@@ -33,20 +41,27 @@ class CurrentGameViewModel @ViewModelInject constructor(
     var isGameOver = true
     val lastMatch = repository.getLatestMatchWithGames()
 
+//    var maxScore = MutableStateFlow(1000)
+
+    val isP1ScoreBoxSelected = MutableLiveData(false)
+    val isP2ScoreBoxSelected = MutableLiveData(false)
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            withTimeout(2000) {
-                while (lastMatch.value == null) delay(100)
-                if (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } < 1000 &&
-                    lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings } < 1000 ||
-                    (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } == lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings }))
-                    isGameOver = false
-                withContext(Dispatchers.Main) {
-                    player1Name.value = lastMatch.value!!.match.player1Name
-                    player2Name.value = lastMatch.value!!.match.player2Name
+            dataStore.data.map { it[MAX_SCORE_KEY] ?: 1000 }.collect { mScore ->
+                withTimeout(2000) {
+                    while (lastMatch.value == null) delay(100)
+                    if (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } < mScore &&
+                        lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings } < mScore ||
+                        (lastMatch.value!!.games.sumOf { it.player1Score + it.player1Callings } == lastMatch.value!!.games.sumOf { it.player2Score + it.player2Callings }))
+                        isGameOver = false
+                    withContext(Dispatchers.Main) {
+                        player1Name.value = lastMatch.value!!.match.player1Name
+                        player2Name.value = lastMatch.value!!.match.player2Name
+                    }
                 }
-            }
 
+            }
         }
 
     }
@@ -95,26 +110,28 @@ class CurrentGameViewModel @ViewModelInject constructor(
 
     fun View.onNewGameClick() {
         viewModelScope.launch {
-            if (lastMatch.value == null || player1Sum.value!! > 1000 || player2Sum.value!! > 1000) {
-                createNewMatch()
-                return@launch
-            }
-            if (player1Sum.value!! < 1000 && player2Sum.value!! < 1000 && player1Sum.value!! > 0 && player2Sum.value!! > 0) {
-                AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.delete_game_in_progress_text))
-                    .setNegativeButton(context.getString(R.string.delete_text)) { _, _ ->
-                        for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) {
-                            repository.deleteGame(game.id)
-                            repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
+            dataStore.data.map { it[MAX_SCORE_KEY] ?: 1000 }.collect { maxScore ->
+                if (lastMatch.value == null || player1Sum.value!! > maxScore || player2Sum.value!! > maxScore) {
+                    createNewMatch()
+                    return@collect
+                }
+                if (player1Sum.value!! < maxScore && player2Sum.value!! < maxScore && player1Sum.value!! > 0 && player2Sum.value!! > 0) {
+                    AlertDialog.Builder(context)
+                        .setTitle(context.getString(R.string.delete_game_in_progress_text))
+                        .setNegativeButton(context.getString(R.string.delete_text)) { _, _ ->
+                            for (game in lastMatch.value!!.games) viewModelScope.launch(Dispatchers.IO) {
+                                repository.deleteGame(game.id)
+                                repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
+                            }
                         }
+                        .setNeutralButton(context.getString(R.string.save_game_text)) { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
+                        .setPositiveButton(context.getString(R.string.cancel_text)) { _, _ -> }
+                        .create()
+                        .show()
+                } else {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
                     }
-                    .setNeutralButton(context.getString(R.string.save_game_text)) { _, _ -> viewModelScope.launch(Dispatchers.IO) { createNewMatch() } }
-                    .setPositiveButton(context.getString(R.string.cancel_text)) { _, _ -> }
-                    .create()
-                    .show()
-            } else {
-                viewModelScope.launch(Dispatchers.IO) {
-                    repository.insertMatch(lastMatch.value!!.match.copy(creationTime = System.currentTimeMillis()))
                 }
             }
         }

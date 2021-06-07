@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var dataStore: DataStore<Preferences>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setMyTheme()
         setLanguage()
         super.onCreate(savedInstanceState)

@@ -3,7 +3,7 @@
     <string-array name="languages">
         <item>Croatian</item>
         <item>English</item>
-        <item>Deutsche</item>
+        <item>Deutsch</item>
         <item>French</item>
     </string-array>
     <string name="app_name">Bela Block</string>

@@ -14,14 +14,17 @@ import androidx.datastore.preferences.core.edit
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ricko.belablok.ui.masterfragment.MasterFragmentDirections
 import com.ricko.belablok.util.Constants.LANGUAGE_KEY
+import com.ricko.belablok.util.Constants.MAX_SCORE_KEY
 import com.ricko.belablok.util.Constants.THEME_KEY
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -34,10 +37,19 @@ class SettingsViewModel @ViewModelInject constructor(
     val isDarkThemeOn = MutableLiveData(true)
 
     @Bindable
-    val currentLanguage = MutableLiveData<String?>()
+    val currentLanguage = MutableLiveData("")
 
+    @Bindable
+    val maxScore = MutableLiveData("1000")
+
+
+    @Bindable
+    val currPos = MutableLiveData(-1)
 
     init {
+        currPos.observeForever{
+            println("/////////////////////////////////////////////////////$it")
+        }
         viewModelScope.launch {
             dataStore.data.map { it[LANGUAGE_KEY] ?: "en" }.collect {
                 currentLanguage.value = when (it) {
@@ -47,6 +59,11 @@ class SettingsViewModel @ViewModelInject constructor(
                     "de" -> "Deutsche"
                     else -> null
                 }
+            }
+        }
+        viewModelScope.launch {
+            dataStore.data.map { it[MAX_SCORE_KEY] ?: 1000 }.collect { mScore ->
+                maxScore.value = mScore.toString()
             }
         }
         currentLanguage.observeForever {

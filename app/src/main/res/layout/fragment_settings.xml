@@ -22,8 +22,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:background="?attr/colorSurface">
+        android:background="?attr/colorSurface"
+        android:padding="16dp">
+
+        <Spinner
+            android:id="@+id/etMaxScore"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/max_score_array"
+            android:inputType="number"
+            app:layout_constraintTop_toTopOf="parent"/>
+<!--            app:selectedValue="@={viewModelSettings.currPos}" -->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_spinner"
@@ -34,7 +44,7 @@
             android:labelFor="@+id/dropDownMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/etMaxScore">
 
             <AutoCompleteTextView
                 android:id="@+id/dropDownMenu"
@@ -46,14 +56,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:visibility="visible"
             android:id="@+id/switchTheme"
             android:layout_width="match_parent"
-            android:checked="@={viewModelSettings.isDarkThemeOn()}"
-            android:onClick="@{(v)->viewModelSettings.themeChange(v)}"
             android:layout_height="wrap_content"
+            android:checked="@={viewModelSettings.isDarkThemeOn()}"
             android:drawableStart="@drawable/ic_dark_mode"
+            android:onClick="@{(v)->viewModelSettings.themeChange(v)}"
             android:text="@string/dark_theme_text"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/til_spinner"
             tools:layout_editor_absoluteX="0dp" />
 
