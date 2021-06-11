@@ -38,6 +38,9 @@ class CurrentGameViewModel @ViewModelInject constructor(
     val player1Sum = MutableLiveData(0)
     val player2Sum = MutableLiveData(0)
 
+    val player1Diff = MutableLiveData("")
+    val player2Diff = MutableLiveData("")
+
     var isGameOver = true
     val lastMatch = repository.getLatestMatchWithGames()
 
@@ -84,7 +87,7 @@ class CurrentGameViewModel @ViewModelInject constructor(
                     player2Name.value -> {
                         player2Name.value = et.text.toString().trim()
                         if (lastMatch.value == null) viewModelScope.launch(Dispatchers.IO) { createNewMatch() }
-                        else viewModelScope.launch(Dispatchers.IO){ updateMatch(et.text.toString(), false) }
+                        else viewModelScope.launch(Dispatchers.IO) { updateMatch(et.text.toString(), false) }
                     }
                 }
             }
@@ -106,7 +109,7 @@ class CurrentGameViewModel @ViewModelInject constructor(
     private suspend fun updateMatch(newName: String, updateP1: Boolean) {
 //        println("/////////////////////////////////////")
 //        viewModelScope.launch {
-            println("**********************************")
+        println("**********************************")
         if (updateP1) repository.insertMatch(lastMatch.value!!.match.copy(player1Name = newName))
         else repository.insertMatch(lastMatch.value!!.match.copy(player2Name = newName))
 //        }
@@ -138,6 +141,19 @@ class CurrentGameViewModel @ViewModelInject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun calcDiff() {
+        val p1Diff = player1Sum.value!! - player2Sum.value!!
+        val p2Diff = player2Sum.value!! - player1Sum.value!!
+        player1Diff.value = when {
+            p1Diff > 0 -> "+$p1Diff"
+            else -> ""
+        }
+        player2Diff.value = when {
+            p2Diff > 0 -> "+$p2Diff"
+            else -> ""
         }
     }
 

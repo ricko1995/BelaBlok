@@ -126,6 +126,7 @@ class CurrentGameFragment : Fragment(R.layout.fragment_current_game), CurrentGam
                             viewModel.player2Sum.value = 0
                             currentGameRvAdapter.submitListOfGames(emptyList())
                         }
+                        viewModel.calcDiff()
                         binding.rvCurrentGame.scrollToPosition(0)
 
                         isP1ScoreBoxSelected.value = false

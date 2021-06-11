@@ -33,10 +33,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    android:autoSizeTextType="uniform"
                     android:onClick="@{(v)->viewModelVar.onNewGameClick(v)}"
                     android:text="@string/new_game"
-                    app:autoSizeMaxTextSize="16sp"
-                    app:autoSizeTextType="uniform" />
+                    app:autoSizeMaxTextSize="16sp" />
 
             </LinearLayout>
 
@@ -69,10 +69,10 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_margin="4dp"
+                        android:autoSizeTextType="uniform"
                         android:gravity="center"
                         android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player1Name)}"
                         android:text="@{viewModelVar.player1Name}"
-                        app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toTopOf="@+id/p1score"
                         app:layout_constraintEnd_toStartOf="@+id/view"
                         app:layout_constraintStart_toStartOf="parent"
@@ -84,10 +84,10 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_margin="4dp"
+                        android:autoSizeTextType="uniform"
                         android:gravity="center"
                         android:onClick="@{(v)->viewModelVar.onPlayerNameClick(v, viewModelVar.player2Name)}"
                         android:text="@{viewModelVar.player2Name}"
-                        app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toTopOf="@+id/p2score"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/view"
@@ -117,12 +117,14 @@
                     <TextView
                         android:id="@+id/p1score"
                         style="@style/TextAppearance.MaterialComponents.Headline3"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/score_input_selector"
                         android:gravity="center"
+                        android:autoSizeTextType="uniform"
+                        android:maxHeight="64dp"
                         android:text="@{String.valueOf(viewModelVar.player1Sum)}"
                         app:isViewSelected="@{viewModelVar.player1Sum>1000 &amp;&amp; viewModelVar.player1Sum>viewModelVar.player2Sum}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,14 +134,27 @@
                         tools:text="1200" />
 
                     <TextView
+                        android:id="@+id/p1Diff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:padding="0dp"
+                        android:text="@{viewModelVar.player1Diff}"
+                        app:layout_constraintStart_toEndOf="@+id/p1score"
+                        app:layout_constraintTop_toTopOf="@+id/p1score"
+                        tools:text="+562" />
+
+                    <TextView
                         android:id="@+id/p2score"
                         style="@style/TextAppearance.MaterialComponents.Headline3"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/score_input_selector"
                         android:gravity="center"
+                        android:autoSizeTextType="uniform"
+                        android:maxHeight="64dp"
                         android:text="@{String.valueOf(viewModelVar.player2Sum)}"
                         app:isViewSelected="@{viewModelVar.player2Sum>1000 &amp;&amp; viewModelVar.player2Sum>viewModelVar.player1Sum}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -147,6 +162,17 @@
                         app:layout_constraintStart_toStartOf="@+id/textView2"
                         app:layout_constraintTop_toBottomOf="@+id/textView2"
                         tools:text="1200" />
+
+                    <TextView
+                        android:id="@+id/p2Diff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:padding="0dp"
+                        android:text="@{viewModelVar.player2Diff}"
+                        app:layout_constraintStart_toEndOf="@+id/p2score"
+                        app:layout_constraintTop_toTopOf="@+id/p2score"
+                        tools:text="+562" />
 
                     <View
                         android:id="@+id/view"
@@ -221,6 +247,6 @@
             android:layout_margin="16dp"
             android:contentDescription="@string/new_entry_fab"
             android:src="@drawable/ic_pen"
-            app:fabSize="auto"/>
+            app:fabSize="auto" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

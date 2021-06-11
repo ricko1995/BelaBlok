@@ -32,6 +32,7 @@
                 app:singleSelection="true">
 
                 <Button
+                android:padding="0dp"
                     android:id="@+id/player1FullWin"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
                     android:layout_width="0dp"
@@ -44,6 +45,7 @@
                     app:strokeColor="@color/black" />
 
                 <Button
+                android:padding="0dp"
                     android:id="@+id/player2FullWin"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.NoRadius"
                     android:layout_width="0dp"
@@ -107,11 +109,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/button9" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button13"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(0,toggleBtnGroup)}"
                 android:text="0"
                 app:layout_constraintStart_toEndOf="@+id/button12"
@@ -130,6 +133,7 @@
 
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
@@ -137,16 +141,17 @@
                 android:layout_marginStart="4dp"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(1,toggleBtnGroup)}"
                 android:text="1"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 app:layout_constraintStart_toStartOf="@+id/player1Score"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button4"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(2,toggleBtnGroup)}"
                 android:text="2"
                 app:layout_constraintBottom_toBottomOf="@+id/button"
@@ -154,11 +159,12 @@
                 app:layout_constraintTop_toTopOf="@+id/button" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button5"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(3,toggleBtnGroup)}"
                 android:text="3"
                 app:layout_constraintBottom_toBottomOf="@+id/button4"
@@ -166,11 +172,12 @@
                 app:layout_constraintTop_toTopOf="@+id/button4" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button6"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(4,toggleBtnGroup)}"
                 android:text="4"
                 app:layout_constraintEnd_toEndOf="@+id/button"
@@ -178,33 +185,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/button" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button7"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(5,toggleBtnGroup)}"
                 android:text="5"
                 app:layout_constraintStart_toEndOf="@+id/button6"
                 app:layout_constraintTop_toBottomOf="@+id/button4" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button8"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(6,toggleBtnGroup)}"
                 android:text="6"
                 app:layout_constraintStart_toEndOf="@+id/button7"
                 app:layout_constraintTop_toBottomOf="@+id/button5" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button9"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(7,toggleBtnGroup)}"
                 android:text="7"
                 app:layout_constraintEnd_toEndOf="@+id/button6"
@@ -212,22 +222,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/button6" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button10"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(8,toggleBtnGroup)}"
                 android:text="8"
                 app:layout_constraintStart_toEndOf="@+id/button9"
                 app:layout_constraintTop_toBottomOf="@+id/button7" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button11"
                 android:layout_width="48dp"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="4dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(9,toggleBtnGroup)}"
                 android:text="9"
                 app:layout_constraintStart_toEndOf="@+id/button10"
@@ -280,22 +292,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/toggleBtnGroup" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button15"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(-20,toggleBtnGroup)}"
                 android:text="-20"
                 app:layout_constraintStart_toStartOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button16"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(20,toggleBtnGroup)}"
                 android:text="+20"
                 app:layout_constraintBottom_toBottomOf="@+id/button15"
@@ -303,77 +317,84 @@
                 app:layout_constraintTop_toTopOf="@+id/button15" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button17"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(-50,toggleBtnGroup)}"
                 android:text="-50"
                 app:layout_constraintStart_toStartOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button15" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button18"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(50,toggleBtnGroup)}"
                 android:text="+50"
                 app:layout_constraintEnd_toEndOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button16" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button19"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(-100,toggleBtnGroup)}"
                 android:text="-100"
                 app:layout_constraintStart_toStartOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button17" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button20"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(100,toggleBtnGroup)}"
                 android:text="+100"
                 app:layout_constraintEnd_toEndOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button18" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button21"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(-150,toggleBtnGroup)}"
                 android:text="-150"
                 app:layout_constraintStart_toStartOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button19" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button22"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(150,toggleBtnGroup)}"
                 android:text="+150"
                 app:layout_constraintEnd_toEndOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button20" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button23"
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(-200,toggleBtnGroup)}"
                 android:text="-200"
                 app:layout_constraintStart_toStartOf="@+id/button25"
@@ -384,17 +405,19 @@
                 android:layout_width="64dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:autoSizeTextType="uniform"
+                android:padding="0dp"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{()->viewModelVar.onScoreBtnClick(200,toggleBtnGroup)}"
                 android:text="+200"
                 app:layout_constraintEnd_toEndOf="@+id/button25"
                 app:layout_constraintTop_toBottomOf="@+id/button22" />
 
             <Button
+                android:padding="0dp"
                 android:id="@+id/button25"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:autoSizeTextType="uniform"
+                android:autoSizeTextType="uniform"
                 android:onClick="@{(v)->viewModelVar.onConfirmEntryClick(v, toggleBtnGroup)}"
                 android:text="@string/enter_text"
                 app:layout_constraintBottom_toBottomOf="@+id/button14"
